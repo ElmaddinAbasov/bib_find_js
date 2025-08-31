@@ -1,6 +1,22 @@
 "use strict"
 const prompt = require('prompt-sync')();
 let authorIndexVal = 0;
+class temporary
+{
+	#temp = [];
+	saveTemp(object)
+	{
+		this.#temp.push(object);
+	}
+	get get_length()
+	{
+		return this.#temp.length;
+	}
+	get get_temp()
+	{
+		return this.#temp[0];
+	}
+};
 class entry
 {
 	#authorName;
@@ -13,7 +29,7 @@ class entry
                 this.#author_key = authorIndexVal;
                 authorIndexVal++;
         }	
-	bib_entry()
+	bib_entry(db)
 	{
 		let decision;
 		this.#authorName = prompt('');
@@ -24,36 +40,42 @@ class entry
 		switch (decision)
 		{
 			case "alter" :
-				bib_key();
-				console.log("alter");	
+				this.bib_key();
+				db.saveTemp(this);
 				break;
 			case "submit" :
-				bib_key();
-				console.log("submit");				//later add to a database or write to a file
+				this.bib_key();
+				db.saveTemp(this);
 				break;
 		}
 	}
+	bib_edit()
+	{
+
+	}
 	get get_author_name()
 	{
-		console.log(`Author name - ${this.#authorName}\n`);
+		console.log(`${this.#authorName}\n`);
 	}
 	get get_univercity_name()
 	{
-		console.log(`Univercity name - ${this.#univercityName}\n`);
+		console.log(`${this.#univercityName}\n`);
 	}
 	get get_publication_date()
 	{
-		console.log(`Publication date - ${this.#publicationDate}`);
+		console.log(`${this.#publicationDate}\n`);
 	}
 	get get_paper_name()
 	{
-		console.log(`Paper name - ${this.#paperName}\n`);
+		console.log(`${this.#paperName}\n`);
 	}
 };
+let temp = new temporary();
 let e = new entry();
-e.bib_entry();
-e.get_author_name;
-e.get_univercity_name;
-e.get_publication_date;
-e.get_paper_name;
-e.bib_key();
+e.bib_entry(temp);
+console.log(temp.get_length);
+let o = temp.get_temp;
+o.get_author_name;
+o.get_univercity_name;
+o.get_publication_date;
+o.get_paper_name;
