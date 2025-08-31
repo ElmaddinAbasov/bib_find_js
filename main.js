@@ -12,9 +12,28 @@ class temporary
 	{
 		return this.#temp.length;
 	}
-	get get_temp()
+	get_temp(index)
 	{
-		return this.#temp[0];
+		if (index < 0 && index >= this.#temp.length)
+		{
+			console.error("ERROR: get get_temp(index) index out of bound\n");
+			return undefined;
+		}
+		return this.#temp[index];
+	}
+	edit_object(oldName, newName)
+	{
+		let i;
+		for (i = 0; i < this.#temp.length; i++)
+		{
+			if (this.#temp[i].get_author_name == oldName)
+			{
+				console.log("i`m here\n");
+				this.#temp[i].set_name = newName;
+				return;
+			}
+		}
+		return undefined;
 	}
 };
 class entry
@@ -49,33 +68,46 @@ class entry
 				break;
 		}
 	}
-	bib_edit()
+	set set_name(name)
 	{
-
+		this.#authorName = name;
+	}
+	bib_edit(db, oldName, newName)
+	{
+		db.edit_object(oldName, newName);
 	}
 	get get_author_name()
 	{
-		console.log(`${this.#authorName}\n`);
+		return this.#authorName;
 	}
 	get get_univercity_name()
 	{
-		console.log(`${this.#univercityName}\n`);
+		return this.#univercityName;
 	}
 	get get_publication_date()
 	{
-		console.log(`${this.#publicationDate}\n`);
+		return this.#publicationDate;
 	}
 	get get_paper_name()
 	{
-		console.log(`${this.#paperName}\n`);
+		return this.#paperName;
 	}
 };
 let temp = new temporary();
 let e = new entry();
 e.bib_entry(temp);
 console.log(temp.get_length);
-let o = temp.get_temp;
-o.get_author_name;
-o.get_univercity_name;
-o.get_publication_date;
-o.get_paper_name;
+let o = temp.get_temp(0);
+console.log(o.get_author_name);
+console.log(o.get_univercity_name);
+console.log(o.get_publication_date);
+console.log(o.get_paper_name);
+
+
+e.bib_edit(temp, "king", "Blatty");
+console.log('------------------------------\n');
+o = temp.get_temp(0);
+console.log(o.get_author_name);
+console.log(o.get_univercity_name);
+console.log(o.get_publication_date);
+console.log(o.get_paper_name);
