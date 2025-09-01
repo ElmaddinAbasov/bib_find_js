@@ -14,7 +14,7 @@ class temporary
 	}
 	get_temp(index)
 	{
-		if (index < 0 && index >= this.#temp.length)
+		if (index < 0 || index >= this.#temp.length)
 		{
 			console.error("ERROR: get get_temp(index) index out of bound\n");
 			return undefined;
@@ -104,29 +104,26 @@ class entry
 	{
 		return this.#paperName;
 	}
+	print_entry()
+	{
+		console.log(this.#authorName, "\n", this.#univercityName, "\n", this.#publicationDate, 
+		"\n", this.#paperName, "\n");
+	}
 };
 let temp = new temporary();
-let e = new entry();
-e.bib_entry(temp);
-console.log(temp.get_length);
-let o = temp.get_temp(0);
-console.log(o.get_author_name);
-console.log(o.get_univercity_name);
-console.log(o.get_publication_date);
-console.log(o.get_paper_name);
-
-
-e.bib_edit(temp, "king", "Blatty");
-console.log('------------------------------\n');
-o = temp.get_temp(0);
-console.log(o.get_author_name);
-console.log(o.get_univercity_name);
-console.log(o.get_publication_date);
-console.log(o.get_paper_name);
-
-o = e.bibFind(temp, "Blatty");
-console.log(o.get_author_name);
-console.log(o.get_univercity_name);
-console.log(o.get_publication_date);
-console.log(o.get_paper_name);
-
+let i, e;
+const number_of_objects = 3;
+for (i = 0; i < number_of_objects; i++)
+{
+	e = new entry();
+	e.bib_entry(temp);
+	console.log('<--------------------------->\n');
+}
+let o = temp.get_temp(1);
+if (o == undefined)
+	process.exit(1);
+console.log("print_entry: result\n");
+o.print_entry();
+console.log("\nfind entry\n");
+o = o.bibFind(temp, "blatty");
+o.print_entry();
