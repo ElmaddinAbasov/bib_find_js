@@ -28,10 +28,19 @@ class temporary
 		{
 			if (this.#temp[i].get_author_name == oldName)
 			{
-				console.log("i`m here\n");
 				this.#temp[i].set_name = newName;
 				return;
 			}
+		}
+		return undefined;
+	}
+	find(name)
+	{
+		let i;
+		for (i = 0; i < this.#temp.length; i++)
+		{
+			if (this.#temp[i].get_author_name == name)
+				return this.#temp[i];
 		}
 		return undefined;
 	}
@@ -58,15 +67,18 @@ class entry
 		decision = prompt('');
 		switch (decision)
 		{
-			case "alter" :
-				this.bib_key();
-				db.saveTemp(this);
-				break;
 			case "submit" :
 				this.bib_key();
 				db.saveTemp(this);
 				break;
+			default :
+				break;
 		}
+	}
+	bibFind(db, name)
+	{
+		let object = db.find(name);
+		return object;
 	}
 	set set_name(name)
 	{
@@ -111,3 +123,10 @@ console.log(o.get_author_name);
 console.log(o.get_univercity_name);
 console.log(o.get_publication_date);
 console.log(o.get_paper_name);
+
+o = e.bibFind(temp, "Blatty");
+console.log(o.get_author_name);
+console.log(o.get_univercity_name);
+console.log(o.get_publication_date);
+console.log(o.get_paper_name);
+
